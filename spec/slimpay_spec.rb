@@ -11,7 +11,7 @@ RSpec.describe Slimpay do
 
   it 'defines API constants' do
     expect(Slimpay::PRODUCTION_ENDPOINT).not_to be nil
-    expect(Slimpay::PRODUCTION_ENDPOINT).to eq 'https://api.slimpay.com'
+    expect(Slimpay::PRODUCTION_ENDPOINT).to eq 'https://api.slimpay.net'
     expect(Slimpay::SANDBOX_ENDPOINT).not_to be nil
     expect(Slimpay::SANDBOX_ENDPOINT).to eq 'https://api.preprod.slimpay.com'
   end
@@ -41,8 +41,7 @@ RSpec.describe Slimpay do
   end
 
   describe '.answer' do
-    let(:http_response) { double('HTTParty::Response') }
-    let(:response_body) { 'response_body' }
+    let(:http_response) { double('HTTParty::Response', body: '{}') }
 
     it 'fails on HTTP code >= 400' do
       expect(http_response).to receive(:code) { 400 }
@@ -52,10 +51,9 @@ RSpec.describe Slimpay do
 
     it 'returns the response as is if HTTP code < 400' do
       expect(http_response).to receive(:code) { 200 }
-      expect(http_response).to receive(:body) { response_body }
 
       expect(Slimpay::Error).not_to receive(:new).with(http_response)
-      expect(Slimpay.answer(http_response)).to eq(response_body)
+      expect(Slimpay.answer(http_response)).to eq('{}')
     end
   end
 end

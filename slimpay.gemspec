@@ -5,15 +5,15 @@ require 'slimpay/version'
 Gem::Specification.new do |spec|
   spec.name          = 'slimpay'
   spec.version       = Slimpay::VERSION
-  spec.authors       = ['Gregory Durelle']
-  spec.email         = ['gregory.durelle@gmail.com']
+  spec.authors       = ['Gregory Durelle', 'Navid Emad']
+  spec.email         = ['gregory.durelle@gmail.com', 'design.navid@gmail.com']
 
   spec.summary       = %(Slimpay HAPI for Ruby.)
   spec.description   = %(Ruby library for Slimpay's Hypermedia API.)
-  spec.homepage      = "https://github.com/gdurelle/slimpay"
+  spec.homepage      = "https://github.com/navidemad/slimpay"
   spec.license       = 'MIT'
 
-  spec.post_install_message = %(Please refer to Slimpay's API https://api-sandbox.slimpay.net/docs for more informations.)
+  spec.post_install_message = %(Please refer to Slimpay's API https://dev.slimpay.com for more informations.)
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.

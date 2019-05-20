@@ -22,7 +22,7 @@ module Slimpay
       if defined?(http_response.code)
         display_http_error(http_response)
       else
-        @message = JSON.parse(http_response)
+        @message = JSON.parse(http_response.body) rescue nil
       end
       fail self, @message
     end
@@ -71,10 +71,19 @@ module Slimpay
     end
 
     def slimpay_error(http_message)
-      slimpay_error = http_message.is_a?(Hash) ? http_message : JSON.parse(http_message)
-      slimpay_code = slimpay_error['code']
-      slimpay_message = slimpay_error['message'] || slimpay_error['error_description']
-      "Slimpay #{slimpay_code} : #{slimpay_message}"
+      slimpay_error = nil
+      if http_message.is_a?(HTTParty::Response)
+        slimpay_error = JSON.parse(http_message.body)
+      elsif http_message.is_a?(Hash)
+        slimpay_error = http_message
+      end
+      unless slimpay_error.nil?
+        slimpay_code = slimpay_error['code']
+        slimpay_message = slimpay_error['message'] || slimpay_error['error_description']
+        "Slimpay #{slimpay_code} : #{slimpay_message}"
+      else
+        "Slimpay error with format unhandled"
+      end
     end
   end
 end

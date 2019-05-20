@@ -151,7 +151,7 @@ module Slimpay
     # Catch up potential errors and generate new methods if needed.
     def follow_up_api(response)
       answer = Slimpay.answer(response)
-      generate_api_methods(response)
+      generate_api_methods(JSON.parse(answer))
       answer
     end
 
